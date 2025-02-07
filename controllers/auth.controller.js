@@ -100,7 +100,7 @@ const login = async (req, res) => {
     //guarda el tocken del usuario en una cookie
     res.cookie("token", token, cookieOptions);
 
-    //devuelve el usuario logeado y sus datos 
+    //devuelve el usuario logeado y sus datos
     res.json({
       message: "Login exitoso",
       user: {
@@ -115,7 +115,6 @@ const login = async (req, res) => {
   }
 };
 
-
 //elimina el tocken, guardado en la cookie para asi cerrar la sesion
 const logout = async (req, res) => {
   try {
@@ -126,8 +125,28 @@ const logout = async (req, res) => {
   }
 };
 
+const check = async (req, res) => {
+  try {
+    // req.usuario ya está disponible gracias al middleware verifyToken
+    // Devolvemos solo la información necesaria del usuario
+    const userData = {
+      id: req.usuario.id,
+      nombres: req.usuario.nombres,
+      nombreDeUsuario: req.usuario.nombreDeUsuario,
+      rol: req.usuario.rol,
+      // Añade aquí cualquier otro campo que necesites en el frontend
+    };
+
+    res.json({ user: userData });
+  } catch (error) {
+    console.error("Error en check auth:", error);
+    res.status(500).json({ message: "Error al verificar la autenticación" });
+  }
+};
+
 module.exports = {
   register,
   login,
   logout,
+  check
 };

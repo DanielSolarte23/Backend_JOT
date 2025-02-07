@@ -1,3 +1,5 @@
+const bcrypt = require('bcryptjs');
+
 module.exports = (sequelize, DataTypes) => {
   const Usuario = sequelize.define('Usuario', {
     nombres: {
@@ -22,6 +24,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM('admin', 'seguridad'),
       allowNull: false
     }
+  });
+
+  Usuario.beforeCreate(async (usuario) => {
+    const salt = await bcrypt.genSalt(10);
+    usuario.password = await bcrypt.hash(usuario.password, salt);
   });
 
   Usuario.associate = (models) => {
