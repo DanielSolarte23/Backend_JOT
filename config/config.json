@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "root",
-    "password": "1061Daniel",
-    "database": "conjunto_VillaSol_db",
+    "username": "",
+    "password": "",
+    "database": "",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
